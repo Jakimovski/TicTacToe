@@ -1,0 +1,10 @@
+C:\Users\Matej\source\repos\probaTicTacToe\probaTicTacToe\bin\Debug\probaTicTacToe.exe.config
+C:\Users\Matej\source\repos\probaTicTacToe\probaTicTacToe\bin\Debug\probaTicTacToe.exe
+C:\Users\Matej\source\repos\probaTicTacToe\probaTicTacToe\bin\Debug\probaTicTacToe.pdb
+C:\Users\Matej\source\repos\probaTicTacToe\probaTicTacToe\obj\Debug\probaTicTacToe.csprojAssemblyReference.cache
+C:\Users\Matej\source\repos\probaTicTacToe\probaTicTacToe\obj\Debug\probaTicTacToe.Form1.resources
+C:\Users\Matej\source\repos\probaTicTacToe\probaTicTacToe\obj\Debug\probaTicTacToe.Properties.Resources.resources
+C:\Users\Matej\source\repos\probaTicTacToe\probaTicTacToe\obj\Debug\probaTicTacToe.csproj.GenerateResource.cache
+C:\Users\Matej\source\repos\probaTicTacToe\probaTicTacToe\obj\Debug\probaTicTacToe.exe
+C:\Users\Matej\source\repos\probaTicTacToe\probaTicTacToe\obj\Debug\probaTicTacToe.pdb
+C:\Users\Matej\source\repos\probaTicTacToe\probaTicTacToe\obj\Debug\probaTicTacToe.FormNewGame.resources
