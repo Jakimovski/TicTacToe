@@ -9,7 +9,7 @@ namespace TicTacToe
 {
     public interface IPlay
     {
-        
+        Color Color { get; set; }
         void Draw(Graphics g);
         int[] GetCoordinates();
     }

@@ -559,5 +559,19 @@ namespace TicTacToe
             }
             
         }
+        public void UpdatePlaysColors()
+        {
+            foreach(IPlay play in Plays)
+            {
+                if (Board[play.GetCoordinates()[0], play.GetCoordinates()[1]].Equals('X'))
+                {
+                    play.Color = ColorX;
+                }
+                else
+                {
+                    play.Color = ColorO;
+                }
+            }
+        }
     }
 }

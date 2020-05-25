@@ -118,6 +118,10 @@ namespace TicTacToe
             Game.ColorX = ColorX;
             Game.ColorO = ColorO;
             Game.ColorBoard = ColorBoard;
+            if(game != null)
+            {
+                game.UpdatePlaysColors();
+            }
         }
 
         private void buttonCustomize_Click(object sender, EventArgs e)
