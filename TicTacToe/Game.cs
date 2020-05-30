@@ -16,19 +16,22 @@ namespace TicTacToe
         public bool XTurn { get; set; }
         public List<IPlay> Plays { get; set; }
         public char Winner { get; set; }
-        public char player1 = 'X';
-        public char player2 = 'O';
         public bool PVP { get; set; }
         public bool AIFirstMove { get; set; }
         public bool Over { get; set; }
+        public IPlay Hovered { get; set; }
+        //1 - Easy, 2 - Medium, 3 - Hard
+        public int Difficullty { get; set; }
 
+        private char player1 = 'X';
+        private char player2 = 'O';
         private float scoreX = -10;
         private float scoreO = 10;
         private float scoreTie = 0;
 
-        public IPlay Hovered { get; set; }
+        private static Random random = new Random();
 
-        public Game(bool Pvp, bool AiFirstMove)
+        public Game(bool Pvp, bool AiFirstMove, int difficulty)
         {
             Board = new char[3, 3];
             XTurn = true;
@@ -36,8 +39,9 @@ namespace TicTacToe
             Over = false;
             PVP = Pvp;
             AIFirstMove = AiFirstMove;
-            
-            for(int i=0; i<3; i++)
+            Hovered = null;
+            Difficullty = difficulty;
+            for (int i=0; i<3; i++)
             {
                 for(int j=0; j<3; j++)
                 {
@@ -52,10 +56,16 @@ namespace TicTacToe
                     player1 = 'O';
                     scoreX = 10;
                     scoreO = -10;
-                    BestMove();
+                    if(Difficullty < 2)
+                    {
+                        RandomMove();
+                    }
+                    else
+                    {
+                        BestMove();
+                    }
                 }
             }
-            Hovered = null;
         }
         public string BoardToString()
         {
@@ -112,7 +122,15 @@ namespace TicTacToe
                         WinCheck();
                         if (!PVP && !Over)
                         {
-                            BestMove();
+                            if (Difficullty < 2)
+                            {
+                                RandomMove();
+                            }
+                            else
+                            {
+                                BestMove();
+                            }
+
                         }
                         WinCheck();
                         if (!Over)
@@ -445,7 +463,31 @@ namespace TicTacToe
             return coordinates;
         }
 
-        
+        public void RandomMove()
+        {
+            int i = 0, j = 0;
+            while (true)
+            {
+                i = random.Next(3);
+                j = random.Next(3);
+                if(Board[i,j].Equals(' '))
+                {
+                    Board[i, j] = player2;
+                    break;
+                }
+            }
+            int[] drawingCoordinates = GetDrawingCoordinates(i, j);
+            Point point = new Point(drawingCoordinates[0], drawingCoordinates[1]);
+            if (player2.Equals('X'))
+            {
+                Plays.Add(new PlayX(point, i, j, ColorX));
+            }
+            else
+            {
+                Plays.Add(new PlayO(point, i, j, ColorO));
+            }
+            XTurn = !XTurn;
+        }
         public void BestMove()
         {
             float bestScore = float.NegativeInfinity;
@@ -458,7 +500,7 @@ namespace TicTacToe
                     {
                         
                         Board[i, j] = player2;
-                        float score = Minimax(Board, 0, false);
+                        float score = Minimax(Board, 0, false, float.NegativeInfinity, float.PositiveInfinity);
 
                         Board[i,j] = ' ';
                         if(score > bestScore)
@@ -486,7 +528,7 @@ namespace TicTacToe
             XTurn = !XTurn;
         }
         
-        public float Minimax(char[,] board, int depth, bool isMaximizing)
+        public float Minimax(char[,] board, int depth, bool isMaximizing, float alpha, float beta)
         {
             char result = GetResult();
 
@@ -516,9 +558,18 @@ namespace TicTacToe
                         if (Board[i, j].Equals(' '))
                         {
                             Board[i, j] = player2;
-                            float score = Minimax(Board, depth + 1, false);
+                            float score = Minimax(Board, depth + 1, false, alpha, beta);
                             Board[i, j] = ' ';
                             bestScore = Math.Max(score, bestScore);
+                            alpha = Math.Max(alpha, bestScore);
+                            if(Difficullty == 2 && depth == random.Next(2,5))//Medium difficulty
+                            {
+                                return bestScore;
+                            }
+                            if(beta <= alpha)
+                            {
+                                break;
+                            }
                         }
                     }
                 }
@@ -535,9 +586,19 @@ namespace TicTacToe
                         if (Board[i, j].Equals(' '))
                         {
                             Board[i, j] = player1;
-                            float score = Minimax(Board, depth + 1, true);
+                            float score = Minimax(Board, depth + 1, true, alpha, beta);
                             Board[i, j] = ' ';
                             bestScore = Math.Min(score, bestScore);
+                            beta = Math.Min(beta, bestScore);
+                            if (this.Difficullty == 2 && depth == random.Next(2,5))//Medium difficulty
+                            {
+                                return bestScore;
+                                
+                            }
+                            if (beta <= alpha)
+                            {
+                                break;
+                            }
                         }
                     }
                 }

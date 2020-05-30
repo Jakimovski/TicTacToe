@@ -18,6 +18,7 @@ namespace TicTacToe
         public bool IsAIFirst { get; set; }
         public string Player1 { get; set; }
         public string Player2 { get; set; }
+        public int Difficulty { get; set; }
         public FormNewGame()
         {
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
@@ -31,7 +32,18 @@ namespace TicTacToe
             buttonStartGame.Enabled = false;
             groupBoxSelectSide.Enabled = false;
         }
-
+        private int GetDifficulty()
+        {
+            if (radioButtonEasy.Checked)
+            {
+                return 1;
+            }
+            if (radioButtonMedium.Checked)
+            {
+                return 2;
+            }
+            return 3;
+        }
         private void radioButtonComputer_CheckedChanged(object sender, EventArgs e)
         {
             if (radioButtonComputer.Checked)
@@ -40,7 +52,11 @@ namespace TicTacToe
                 groupBoxSelectSide.Enabled = true;
                 if (radioButtonPlayX.Checked || radioButtonPlayO.Checked)
                 {
-                    buttonStartGame.Enabled = true;
+                    groupBoxDifficulty.Enabled = true;
+                    if(radioButtonEasy.Checked || radioButtonMedium.Checked || radioButtonHard.Checked)
+                    {
+                        buttonStartGame.Enabled = true;
+                    }
                 }
                 else
                 {
@@ -76,6 +92,7 @@ namespace TicTacToe
                 IsAIFirst = false;
                 Player1 = "Player";
                 Player2 = "Computer";
+                Difficulty = GetDifficulty();
             }
             else if(radioButtonComputer.Checked && radioButtonPlayO.Checked)
             {
@@ -83,6 +100,7 @@ namespace TicTacToe
                 IsAIFirst = true;
                 Player1 = "Computer";
                 Player2 = "Player";
+                Difficulty = GetDifficulty();
             }
             DialogResult = DialogResult.OK;
         }
@@ -93,6 +111,7 @@ namespace TicTacToe
             {
                 groupBoxNames.Enabled = true;
                 groupBoxSelectSide.Enabled = false;
+                groupBoxDifficulty.Enabled = false;
                 if(textBoxPlayer1.Text != null && textBoxPlayer1.Text != "" && textBoxPlayer2.Text != null && textBoxPlayer2.Text != "")
                 {
                     buttonStartGame.Enabled = true;
@@ -108,26 +127,16 @@ namespace TicTacToe
 
         private void radioButtonPlayX_CheckedChanged(object sender, EventArgs e)
         {
-            if (radioButtonPlayX.Checked)
-            {
-                buttonStartGame.Enabled = true;
-            }
-            else
-            {
-                buttonStartGame.Enabled = false;
-            }
+            groupBoxDifficulty.Enabled = true;
+            
+            
         }
 
         private void radioButtonPlayO_CheckedChanged(object sender, EventArgs e)
         {
-            if (radioButtonPlayO.Checked)
-            {
-                buttonStartGame.Enabled = true;
-            }
-            else
-            {
-                buttonStartGame.Enabled = false;
-            }
+            groupBoxDifficulty.Enabled = true;
+            
+            
         }
 
         private void textBoxPlayer1_KeyPress(object sender, KeyPressEventArgs e)
@@ -152,6 +161,21 @@ namespace TicTacToe
             {
                 buttonStartGame.Enabled = false;
             }
+        }
+
+        private void radioButtonEasy_CheckedChanged(object sender, EventArgs e)
+        {
+            buttonStartGame.Enabled = true;
+        }
+
+        private void radioButtonMedium_CheckedChanged(object sender, EventArgs e)
+        {
+            buttonStartGame.Enabled = true;
+        }
+
+        private void radioButtonHard_CheckedChanged(object sender, EventArgs e)
+        {
+            buttonStartGame.Enabled = true;
         }
     }
 }

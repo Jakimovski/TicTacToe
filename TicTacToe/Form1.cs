@@ -22,6 +22,7 @@ namespace TicTacToe
         public Color ColorX { get; set; } = Color.Black;
         public Color ColorO { get; set; } = Color.Black;
         public Color ColorBoard { get; set; } = Color.Black;
+        public int Difficulty { get; set; }
         public Form1()
         {
             x = y = -1;
@@ -80,7 +81,8 @@ namespace TicTacToe
             {
                 isPVP = formNewGame.IsPVP;
                 isAIFirst = formNewGame.IsAIFirst;
-                game = new Game(formNewGame.IsPVP, formNewGame.IsAIFirst);
+                Difficulty = formNewGame.Difficulty;
+                game = new Game(formNewGame.IsPVP, formNewGame.IsAIFirst, formNewGame.Difficulty);
                 score = new Score(formNewGame.Player1, formNewGame.Player2);
                 labelScore.Text = score.ToString();
                 groupBoxScore.Visible = true;
@@ -169,14 +171,27 @@ namespace TicTacToe
                 {
                     
                     isAIFirst = !isAIFirst;
-                    game = new Game(isPVP, isAIFirst);
+                    game = new Game(isPVP, isAIFirst, Difficulty);
                     playing = true;
                     UpdateTurnStatus();
                 }
                 else
                 {
                     game = null;
-                    labelStatus.Text = "No game in progress.";
+                    string status = "";
+                    if(score.PointsP1 > score.PointsP2)
+                    {
+                        status = string.Format("Game over. {0} wins!", score.Player1);
+                    }
+                    else if(score.PointsP1 < score.PointsP2)
+                    {
+                        status = string.Format("Game over. {0} wins!", score.Player2);
+                    }
+                    else
+                    {
+                        status = string.Format("Game over. No winner.");
+                    }
+                    labelStatus.Text = status;
                 }
 
                 Invalidate();
