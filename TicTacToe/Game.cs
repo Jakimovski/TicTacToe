@@ -562,7 +562,7 @@ namespace TicTacToe
                             Board[i, j] = ' ';
                             bestScore = Math.Max(score, bestScore);
                             alpha = Math.Max(alpha, bestScore);
-                            if(Difficullty == 2 && depth == random.Next(2,5))//Medium difficulty
+                            if(Difficullty == 2 && depth == random.Next(1,5))//Medium difficulty
                             {
                                 return bestScore;
                             }
@@ -590,7 +590,7 @@ namespace TicTacToe
                             Board[i, j] = ' ';
                             bestScore = Math.Min(score, bestScore);
                             beta = Math.Min(beta, bestScore);
-                            if (this.Difficullty == 2 && depth == random.Next(2,5))//Medium difficulty
+                            if (this.Difficullty == 2 && depth == random.Next(1,5))//Medium difficulty
                             {
                                 return bestScore;
                                 
