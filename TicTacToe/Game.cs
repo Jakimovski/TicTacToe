@@ -9,26 +9,63 @@ namespace TicTacToe
 {
     public class Game
     {
+        /// <summary>
+        /// Colors used for drawing
+        /// </summary>
         public static Color ColorBoard { get; set; } = Color.Black;
         public static Color ColorX { get; set; } = Color.Black;
         public static Color ColorO { get; set; } = Color.Black;
+        /// <summary>
+        /// Current game board
+        /// </summary>
         public char[,] Board { get; set; }
+        /// <summary>
+        /// Is X's turn
+        /// </summary>
         public bool XTurn { get; set; }
+        /// <summary>
+        /// Stores objects from PlayX and PlayO classes (used for drawing)
+        /// </summary>
         public List<IPlay> Plays { get; set; }
+        /// <summary>
+        /// Winner of the game
+        /// Possible values: 'X', 'O' and 'T' for tie
+        /// </summary>
         public char Winner { get; set; }
+        /// <summary>
+        /// Is the game mode player vs player
+        /// </summary>
         public bool PVP { get; set; }
+        /// <summary>
+        /// Is AI playing as X
+        /// </summary>
         public bool AIFirstMove { get; set; }
+        /// <summary>
+        /// Is the game over
+        /// </summary>
         public bool Over { get; set; }
+        /// <summary>
+        /// Stores an object (PlayX or PlayO)
+        /// Used for drawing on a hovered square (if it's available)
+        /// </summary>
         public IPlay Hovered { get; set; }
-        //1 - Easy, 2 - Medium, 3 - Hard
+        /// <summary>
+        /// Difficulty of the game
+        /// 1 - Easy, 2 - Medium, 3 - Hard
+        /// </summary>
         public int Difficullty { get; set; }
-
+        
         private char player1 = 'X';
         private char player2 = 'O';
+        /// <summary>
+        /// scores used in Minimax (assuming AI is playing as O, if AI is playing as X scoreX=10, scoreO=-10)
+        /// </summary>
         private float scoreX = -10;
         private float scoreO = 10;
         private float scoreTie = 0;
-
+        /// <summary>
+        /// used in Minimax to generate random depth (for medium difficulty only)
+        /// </summary>
         private static Random random = new Random();
 
         public Game(bool Pvp, bool AiFirstMove, int difficulty)
@@ -62,24 +99,12 @@ namespace TicTacToe
                     }
                     else
                     {
-                        BestMove();
+                        AIMove();
                     }
                 }
             }
         }
-        public string BoardToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < 3; i++)
-            {
-                for (int j = 0; j < 3; j++)
-                {
-                    sb.Append(Board[i, j] + " ");
-                }
-                sb.Append("\n");
-            }
-            return sb.ToString();
-        }
+        
         public static void DrawBoard(Graphics g)
         {
             Pen pen = new Pen(ColorBoard, 4);
@@ -128,7 +153,7 @@ namespace TicTacToe
                             }
                             else
                             {
-                                BestMove();
+                                AIMove();
                             }
 
                         }
@@ -233,7 +258,7 @@ namespace TicTacToe
             }
             return Point.Empty;
         }
-        public bool WinCheck()
+        private bool WinCheck()
         {
             for(int i=0; i<3; i++)
             {
@@ -292,7 +317,7 @@ namespace TicTacToe
             }
             return false;
         }
-        public char GetResult()
+        private char GetResult()
         {
             for (int i = 0; i < 3; i++)
             {
@@ -488,7 +513,7 @@ namespace TicTacToe
             }
             XTurn = !XTurn;
         }
-        public void BestMove()
+        public void AIMove()
         {
             float bestScore = float.NegativeInfinity;
             int moveI = -1, moveJ = -1;
