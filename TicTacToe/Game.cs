@@ -166,7 +166,7 @@ namespace TicTacToe
                 }
             }
         }
-        public void AddToBoard(int i, int j)
+        private void AddToBoard(int i, int j)
         {
             if (XTurn)
             {
@@ -214,7 +214,7 @@ namespace TicTacToe
                 Hovered = null;
             }
         }
-        public Point GetDrawingPoint(int x, int y)
+        private Point GetDrawingPoint(int x, int y)
         {
             //returns the drawing point based on the click coordinates
             if (x > 20 && y > 20 && x < 380 && y < 380)
@@ -364,7 +364,7 @@ namespace TicTacToe
             }
             return result;
         }
-        public bool IsHoveringBoard(int x, int y)
+        private bool IsHoveringBoard(int x, int y)
         {
             if(x > 20 && y > 20 && x < 380 && y < 380)
             {
@@ -372,7 +372,7 @@ namespace TicTacToe
             }
             return false;
         }
-        public int[] GetBoardCoordinates(int x, int y)
+        private int[] GetBoardCoordinates(int x, int y)
         {
             //returns the board coordinates based on the click coordinates
             int[] coordinates = new int[2];
@@ -426,7 +426,7 @@ namespace TicTacToe
             }
             return coordinates;
         }
-        public int[] GetDrawingCoordinates(int i, int j)
+        private int[] GetDrawingCoordinates(int i, int j)
         {
             //returns drawing coordinates based on the coordinates on the board
             int[] coordinates = new int[2];
@@ -488,7 +488,7 @@ namespace TicTacToe
             return coordinates;
         }
 
-        public void RandomMove()
+        private void RandomMove()
         {
             int i = 0, j = 0;
             while (true)
@@ -513,7 +513,7 @@ namespace TicTacToe
             }
             XTurn = !XTurn;
         }
-        public void AIMove()
+        private void AIMove()
         {
             float bestScore = float.NegativeInfinity;
             int moveI = -1, moveJ = -1;
@@ -553,7 +553,7 @@ namespace TicTacToe
             XTurn = !XTurn;
         }
         
-        public float Minimax(char[,] board, int depth, bool isMaximizing, float alpha, float beta)
+        private float Minimax(char[,] board, int depth, bool isMaximizing, float alpha, float beta)
         {
             char result = GetResult();
 
